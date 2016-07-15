@@ -1,0 +1,44 @@
+body {  padding:4px; background-repeat:no-repeat; background-position:center;}
+body h2 {font-family:"微软雅黑"; font-weight:bold;}
+#text {}
+.panel-body {
+padding: 4px;
+}
+#panel1 { margin-top:5%; background:#F9F9F9; padding-left:0px; padding-right:0px;}
+#panel2 { height:auto; background:#F9F9F9;}
+#panel3 { background:#F9F9F9; padding-right:0px; padding-left:0px;}
+#panel4 { background:#F9F9F9; padding-right:0px; padding-left:0px;}
+#panel3 button { margin-top:1px; margin-bottom:1px;}
+#panel4 button { margin-top:1px; margin-bottom:1px;}
+
+.panel {
+	
+	background:#F9F9F9;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	box-shadow:3px 3px 5px rgba(0,0,0,0.5);
+	-moz-box-shadow:3px 3px 5px rgba(0,0,0,0.5);
+	-webkit-box-shadow:3px 3px 5px rgba(0,0,0,0.5);
+	box-shadow:3px 3px 5px rgba(0,0,0,0.5) #000;
+	-moz-box-shadow:3px 3px 5px rgba(0,0,0,0.5) #000;
+	-webkit-box-shadow:3px 3px 5px rgba(0,0,0,0.5) #000;
+	}
+
+#row_0 { margin-top:10%;}
+#content_1 img { width:80px; margin-right:0px;}
+.content img {margin-right:0px;}
+.content{margin:10px; max-width:100%; height:220px; padding:10px; overflow:auto; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+.content .content-wrapper{overflow:hidden;}
+.Game_DT{width:85px; height:auto;float:left; margin:0 10px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+
+.ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}
+
+@media \0screen\,screen\9 {
+	body #header { float:left; width:auto;}
+	body #title  { float:left;width:auto; }
+	body #row_0 {  width:650px;;margin:0px auto;margin-top:10%; }
+	body #row_1 { margin:20px 50px 0px 50px}
+	
+	
+}

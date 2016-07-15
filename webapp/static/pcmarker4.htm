@@ -1,0 +1,203 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<title>Pcmarker4.2</title>
+<style>
+body { height:900px; width:1600px; margin:0px auto;}
+#vertical_1 { float:left; height:100%; width:400px;}
+#vertical_2 { float:left; height:100%; width:50px;}
+#vertical_3 { float:left; height:100%; width:1000px;}
+#vertical_4 { float:left; height:100%; width:50px;}
+#emptybox_1 { float:left; height:100px; width:400px;}
+#pcmarker_title { float:left; height:200px; width:400px; font-size:70px;}
+#emptybox_2 { float:left; height:600px; width:400px;}
+#emptybox_3 { float:left; height:300px; width:50px;}
+#emptybox_4 { float:left; height:600px; width:50px;}
+#emptybox_5 { float:left; height:100px; width:100%;}
+#mark_1 { float:left; height:50px; width:100%;}
+#emptybox_6 { float:left; height:100px; width:100%;}
+#game_detail { float:left; height:650px; width:100%;}
+#game_level { float:left; height:50px; width:100%;background:#0FF}
+#emptybox_7 { float:left; height:50px; width:100%;}
+#game_1 {float:left; height:180px; width:100%;}
+#emptybox_8 { float:left; height:50px; width:100%;}
+#game_2 { float:left; height:180px; width:100%;}
+#game_more { float:left; height:50px; width:100%;}
+#emptybox_9 { float:left; height:300px; width:50px;}
+#emptybox_10 { float:left; height:600px; width:50px;}
+#emptybox_4_1 { float:left;height:235;width:50px;}
+#btn_left { float:left;height:50px;width:50px;}
+#emptybox_4_2 { float:left;height:235;width:50px;}
+#line_left { float:left;height:235;width:24px;}
+#line { float:left;height:235;width:1px; background:#CCC}
+#line_right { float:left;height:235;width:25px;}
+#line_left2 { float:left;height:235;width:24px;}
+#line2 { float:left;height:235;width:1px; background:#CCC}
+#line_right2 { float:left;height:235;width:25px;}
+#V_tag { float:left;height:20;width:47px; background:#096; }
+#V_ID { float:left;height:20;width:150px;}
+#V_compare { float:left;height:20;width:100px;}
+#V_mark { float:left;height:50px;width:180px;}
+#high { float:left;}
+#normal { float:left;}
+#low { float:left;}
+</style>
+<script>
+$(function() {
+var VideoTags = [
+      "GTX TITAN",
+      "GTX 690",
+      "GTX 680",
+      "GTX 670",
+      "GTX 660TI",
+      "GTX 660",
+      "GTX 650TI BOOST",
+      "GTX 560TI",
+      "GTX 560TI",
+      "GTX 560SE",
+      "GTX 560",
+      "GTX 550TI",
+      "GTS 450",
+      "GT 640",
+      "GT 630",
+      "GT 620",
+      "GT 610",
+      "GT 520",
+      "HD 7970",
+	  "HD 7950",
+	  "HD 7870",
+	  "HD 7850",
+	  "HD 7750",
+	  "HD 6670",
+	  "HD 6850",
+	  "HD 6570",
+	  "HD 6450"
+    ];
+	
+
+   
+	
+});
+</script>
+</head>
+
+
+<body>
+<div id="vertical_1">
+	<div id="emptybox_1">
+    emptybox_1</div>
+    <div id="pcmarker_title">pcmarker
+    	<div id="tagsbox" style="float:left;">
+    		<input id="text" type="text"/>
+            <input id="btn" type="button" value="提交ajax"/>
+    	</div>
+    </div>
+    
+    <div id="emptybox_2">
+    emptybox_2</div>
+</div>
+	
+<div id="vertical_2">
+	<div id="emptybox_3">
+    emptybox_3</div>
+    <div id="emptybox_4">
+    	<div id="emptybox_4_1">
+        	<div id="line_left">
+            </div>
+            <div id="line">
+            </div>
+            <div id="line_right">
+            </div>
+        </div>
+        <div id="btn_left">
+        >
+        </div>
+        <div id="emptybox_4_2">
+        	<div id="line_left2">
+            </div>
+            <div id="line2">
+            </div>
+            <div id="line_right2">
+            </div>
+        </div>
+    </div>
+</div>
+	
+<div id="vertical_3">
+	<div id="emptybox_5">
+    emptybox_5
+    </div>
+    <div id="mark_1">
+    	<div id="V_tag">
+        nvdia
+        </div>
+        <div id="V_ID">
+        GTX 690
+        </div>
+        <div id="V_compare">
+        加入对比
+        </div>
+        <div id="V_mark">
+        8593
+        </div>
+    </div>
+    <div id="emptybox_6">
+    emptybox_6</div>
+    <div id="game_detail">
+    	<div id="game_level">
+        	<div id="high">
+            >60|
+            </div>
+            <div id="normal">
+            30~59|
+            </div>
+            <div id="low">
+            20~30|
+            </div>
+        </div>
+        <div id="emptybox_7">
+        emptybox_7
+        </div>
+        <div id="game_1">
+        game_1
+        </div>
+        <div id="emptybox_8">
+        emptybox_8
+        </div>
+        <div id="game_2">
+        game_2
+        </div>
+        <div id="game_more">
+        game_more
+        </div>
+    </div>
+</div>
+<div id="vertical_4">
+	<div id="emptybox_9">
+    emptybox_9</div>
+    <div id="emptybox_10">
+    emptybox_10</div>
+</div>
+</body>
+<script>
+	$( "#btn" ).click(function(){
+		
+		alert("提交字符串：" + $( "#text" ).val());
+		var dict = new Object();
+		dict['keyword'] = $( "#text" ).val();
+		var dataGet = JSON.stringify(dict);
+		
+		
+		$.ajax({
+			type:GET,
+			data:dataGet,
+			url:"/GetHardList",
+			dataType:"json",
+			success: function(respone){
+				console.log(respone);},
+			});
+		});
+</script>
+</html>

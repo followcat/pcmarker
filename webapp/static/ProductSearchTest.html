@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <title></title>
+</head>
+<body>
+
+<script>
+
+var test_dict = new Object();
+test_dict['keyword'] = 'hd7850';
+var json_data = JSON.stringify(test_dict);
+
+var post_dict = new Object();
+post_dict['method'] = "59miao.items.search";
+post_dict['fields'] = "keyword";
+post_dict['fields_dict'] = json_data;
+
+var post_data = JSON.stringify(post_dict);
+console.log(post_data);
+$.ajax({
+type:"get",
+data:post_dict,
+url: "/ProductSearch",
+dataType:"json",
+success:function(respone){
+    console.log(respone);
+}
+});
+</script>
+</body>
+</html>

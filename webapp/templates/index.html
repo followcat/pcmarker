@@ -1,0 +1,487 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!--DOCTYPE HTML-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../../static/bootstrap-3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+<link href="../../static/css/pcmarker_re.css" rel="stylesheet" media="screen">
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="../../static/bootstrap-3.0.0/js/bootstrap.min.js">
+</script>
+<!--script src="../../static/bootstrap-2/js/bootstrap.min.js"></script-->
+<script src="../../static/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<link href="../../static/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+
+<title>显卡性能 - 显卡查询 - Pcmarker</title>
+<meta name="keywords" content="显卡性能,显卡排名,显卡,怎么选显卡,买什么显卡,显卡测试,">
+<meta name="description" content="显卡能玩什么游戏，显卡性能究竟如何">
+</head>
+<body>
+<div class="container">
+	<div id="row_0" class="row" >
+    <div id="header" class="col-sm-5 col-md-4 col-md-offset-2">
+    <img src="../../static/img/pcmarker.jpg"  alt="显卡性能查询" class="img-rounded" >
+    </div>
+    <div id="title" class="col-sm-5 col-md-4">
+    <h2>显卡性能最快查！</h2>
+    </div>
+    </div>
+    <div id="row_1" class="row">
+    <div id="panel1" class="panel panel-default col-xs-12 col-sm-12 col-md-10 col-md-offset-1" >
+ 	<div class="panel-body">
+    <div class="col-sm-12 ">
+    <ul id="choose_top" class="nav nav-tabs" >
+    <li><a id="RM" href="#">入门显卡</a></li>
+  	<li id="SY" class="active"><a href="#">实用显卡</a></li>
+  	<li><a id="FS" href="#">发烧显卡</a></li>
+	<li class="disabled"><a id="JC" href="#">集成显卡</a></li>
+    </ul>
+    </div>
+    <div class="col-sm-12 ">
+    <ul id="choose_bot"class="nav nav-pills">
+	</ul>
+    </div>
+    <div class="col-sm-12 ">
+    <div class="input-group" >
+    <input id="inputText" type="text" class="typeahead_search form-control" data-provide="typeahead" data-source="[]"/>
+    <span class="input-group-btn">
+	<button id="GO" class="btn btn-default" type="button">Go!</button>
+	</span>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!--div id="our" class="row" style="text-align:center; margin-top:10px;">
+    <div class="col-sm-12 col-md-12" style="font-size:200px">
+    联系我们
+    </div>
+    </div-->
+</div>
+        
+<script>
+var RM_Label = new Array("GT 630","GT 640","GTX 650","GTX 650Ti","HD 7750","HD 7770","R7 260X");		
+var RM_Card = new Array("GeForce GT 630","GeForce GT 640","GeForce GTX 650","GeForce GTX 650 Ti","Radeon HD 7750","Radeon HD 7770","Radeon R7 260X");		
+var SY_Label = new Array("GTX 650Ti BOOST","GTX 660","GTX 660Ti","HD 7850","R9 270X","HD 7950");
+var SY_Card = new Array("GeForce GTX 650 Ti BOOST","GeForce GTX 660","GeForce GTX 660 Ti","Radeon HD 7850","Radeon R9 270X","Radeon HD 7950");
+var FS_Label = new Array("GTX 770","GTX 780","GTX 690","GTX Titan","R9 280X","HD 7970","HD 7990");
+var FS_Card = new Array("GeForce GTX 770","GeForce GTX 780","GeForce GTX 690","GeForce GTX Titan","Radeon HD 7970 \/ R9 280X","Radeon HD 7970 \/ R9 280","Radeon HD 7990");
+var dict = new Object();
+var temp = new Object();
+var VC_LEVEL = '1';
+var VC_LIST = new Array();
+dict['table'] = "GpuMark";
+var ALL
+$.ajax({
+	//获取所有显卡的id
+			type:"GET",
+    		data:dict,
+    		url:"/GetNameList",
+    		dataType:"json",
+			success: function(respone){
+			var TempGupMarkList = new Array();
+			for(each in respone){
+			TempGupMarkList.push(respone[each]);
+			}
+			temp = TempGupMarkList;
+			$('.typeahead_search').autocomplete({
+				source:TempGupMarkList,
+				});
+				}
+		});
+
+
+/*
+var ull = document.getElementsByName("Card_a");
+for(var i=0;i<=RM_Card.length;i++){
+	ull[i].innerHTML = RM_Card[i];
+	}*/
+
+function fixFPS(fps,MULT){
+	var FPS = fps;
+	if(FPS.indexOf(" ") != -1){
+	FPS = FPS.substring(0,FPS.indexOf(" "));}
+	
+	return (FPS * MULT).toFixed(0);
+	
+	}
+
+function FPS_COLOR_AND_LENGTH(num){
+	var C_and_L = new Array();
+		if(num>=50){C_and_L.push('#0C6',0)}
+		if(num>=40 && num<50){C_and_L.push('#0C6',12)}
+		if(num>=30 && num<40){C_and_L.push('#0C6',24)}
+		if(num>=20 && num<30){C_and_L.push('#F90',36)}
+		if(num>=0 && num<20){C_and_L.push('#F33',48)}
+		return C_and_L;
+	}
+	
+function CreatScrollBlock(Card_Name){
+	
+	var CC = Card_Name + "_content";
+	var CCW = Card_Name + "_content_wrapper";
+	
+	var ScrollBlock = "<div id=\"CARD_CONTENT\" class=\"content\" style=\"MOBILE\"><div id=\"CARD_CONTENT_WRAPPER\" class=\"content-wrapper\"></div></div>";
+	ScrollBlock = ScrollBlock.replace("CARD_CONTENT",CC);
+	ScrollBlock = ScrollBlock.replace("CARD_CONTENT_WRAPPER",CCW);
+	if(navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Linux') > -1 || navigator.userAgent.indexOf('iPhone') > -1){
+		ScrollBlock = ScrollBlock.replace("MOBILE","margin:0px;")
+		}
+	return ScrollBlock;
+	}
+	
+function GameBlock(gamename,color,length){
+	
+	var GameBlockString = "<div class=\"Game_DT\" style=\" width:85px;MOBILE\"><div id=\"REL_GAME_NAME\" class=\"Game_img\" style=\"float:left; width:60px;\">GAMEIMG</div><div class=\"Game_fps\" style=\"float:left; width:5px; height:85px; background:BACKGROUND;\"><div style=\"float:left; margin-left:0px;width:5px;padding:0px; height:HEIGHT;background:#F9F9F9\"></div></div><div class=\"Game_name\" style=\"float:left; width:85px; \">GAMENAME</div></div>"
+	
+	//var img_SINAAPP_URL = "<img src=\""  + "http://pcmarker-gamepic.stor.sinaapp.com/" + gamename+ ".jpg" + "\"></img>"
+	//console.log(img_SINAAPP_URL);
+	//GameBlockString = GameBlockString.replace("GAMEIMG",img_SINAAPP_URL); 
+	GameBlockString = GameBlockString.replace("REL_GAME_NAME",gamename);
+	GameBlockString = GameBlockString.replace("HEIGHT",length + "px");
+	GameBlockString = GameBlockString.replace("BACKGROUND",color);
+	GameBlockString = GameBlockString.replace("GAMENAME",gamename);
+	if(navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Linux') > -1 || navigator.userAgent.indexOf('iPhone') > -1){
+		GameBlockString = GameBlockString.replace("MOBILE","margin:3px;")
+		}
+	//$(".mCSB_buttonRight").css("background-image","none");
+	$(".mCSB_buttonRight").css("background-image","url(../../static/css/mCSB_buttons.png)");
+	return GameBlockString;
+	
+
+	
+	}
+
+function switchGameLevel(GameLevel){
+	
+	}
+
+
+function getGetGpuFps(Card_Name){
+	var Game_LIST_ULTRA = new Array();
+	var Game_FPS_ULTRA = new Array();
+	var Game_LIST_HIGH = new Array();
+	var Game_FPS_HIGH = new Array();
+	var Game_LIST_MED = new Array();
+	var Game_FPS_MED = new Array();
+	var Game_LIST_LOW = new Array();
+	var Game_FPS_LOW = new Array();
+	var dict = new Object();
+	var o_pic = 0;
+	 dict['gpuname'] = Card_Name;
+	 $.ajax({
+		type:"GET",
+		data:dict,
+		url:"/GetGpuFps",
+		dataType:"json",		
+		success: function(respone){
+			var MULT = respone['mult'];
+			for(var i = 0;i<respone['fps'].length;i++){
+				if(respone['fps'][i]['options'].indexOf("ultra") != -1){
+					Game_LIST_ULTRA.push(respone['fps'][i]['game']);
+					Game_FPS_ULTRA.push(fixFPS(respone['fps'][i]['FPS'],MULT));
+					}
+				if(respone['fps'][i]['options'].indexOf("high") != -1){
+					Game_LIST_HIGH.push(respone['fps'][i]['game']);
+					Game_FPS_HIGH.push(fixFPS(respone['fps'][i]['FPS'],MULT));
+					}
+				if(respone['fps'][i]['options'].indexOf("med") != -1){
+					Game_LIST_MED.push(respone['fps'][i]['game']);
+					Game_FPS_MED.push(fixFPS(respone['fps'][i]['FPS'],MULT));
+					}
+				if(respone['fps'][i]['options'].indexOf("low") != -1){
+					Game_LIST_LOW.push(respone['fps'][i]['game']);
+					Game_FPS_LOW.push(fixFPS(respone['fps'][i]['FPS'],MULT));
+					}
+				}
+				//if(Game_LIST_ULTRA.length ==0){var a = "#"+ Card_Name+"ULTRA";$(a).parent().addClass("disabled");}
+				//if(Game_LIST_HIGH.length ==0){var a = "#"+ Card_Name+"HIGH";$(a).parent().addClass("disabled");}
+				//if(Game_LIST_MED.length ==0){var a = "#"+ Card_Name+"MED";$(a).parent().addClass("disabled");}
+				//if(Game_LIST_LOW.length ==0){var a = "#"+ Card_Name+"LOW";$(a).parent().addClass("disabled");}
+				if(Game_LIST_ULTRA.length != 0){
+					if((document.getElementById(Card_Name + "_game_row") != null)){
+					document.getElementById(Card_Name + "_game_row").innerHTML = CreatScrollBlock(Card_Name);
+					
+					var scrollWidth = document.getElementById(Card_Name+"_content").clientWidth-30;
+					}
+					$(".content:first").mCustomScrollbar({
+							scrollButtons:{
+								enable:true,
+								scrollType:"pixels",
+								scrollAmount:scrollWidth
+							},
+							theme:"dark-thick",
+							horizontalScroll:true,
+							advanced:{autoExpandHorizontalScroll:true,updateOnContentResize:false}
+							});
+					for(var i = 0;i<Game_LIST_ULTRA.length;i++){
+							var GAMENAME = Game_LIST_ULTRA[i];
+							var FPS = Game_FPS_ULTRA[i];
+							var color = FPS_COLOR_AND_LENGTH(FPS)[0];
+							var length = FPS_COLOR_AND_LENGTH(FPS)[1];
+							$(".content-wrapper:first").append(GameBlock(GAMENAME,color,length));
+							$(".content:first").mCustomScrollbar("update");
+					
+					/*	ajax请求游戏图片，使用sae storage后虽然响应速度有所下降，但保证了图片的位置和顺序不错乱*/
+					var dict3 = new Object();
+					dict3['gamename'] = Game_LIST_ULTRA[i];
+					$.ajax({
+						type:"GET",
+						data:dict3,
+						url:"/GetGamePic",
+						dataType:"json",
+						async:true,
+						success: function(respone2){
+							var img = "<img src=\"" + respone2 + "\"></img>";
+							console.log(img)
+							var imgdiv = document.getElementsByClassName("Game_img");
+							imgdiv[o_pic].innerHTML = img;
+							o_pic ++;
+							document.getElementById(GAMENAME).innerHTML = img;
+							}
+						});
+					
+					}
+				
+					}
+				//console.log(FPS_COLOR_AND_LENGTH(31));
+				//console.log(FPS_COLOR_AND_LENGTH(31)[0]);
+				//console.log(FPS_COLOR_AND_LENGTH(31)[1]);
+				//console.log(Game_LIST_ULTRA,Game_LIST_ULTRA.length);
+				//console.log(Game_FPS_ULTRA,Game_FPS_ULTRA.length);
+				//console.log(Game_LIST_HIGH,Game_LIST_HIGH.length);
+				//console.log(Game_FPS_HIGH,Game_FPS_HIGH.length);
+				//console.log(Game_LIST_MED,Game_LIST_MED.length);
+				//console.log(Game_FPS_MED,Game_FPS_MED.length);
+				//console.log(Game_LIST_LOW,Game_LIST_LOW.length);
+				//console.log(Game_FPS_LOW,Game_FPS_LOW.length);
+			}
+	 });
+	
+	}
+
+
+
+function CreatChoosen(index_num){
+	//设置顶部选择标签的下部分
+	var Choosen_Array = new Array();
+	switch(index_num){
+		case 0: var Choosen_Array = RM_Label;break;
+		case 1: var Choosen_Array = SY_Label;break;
+		case 2: var Choosen_Array = FS_Label;break;
+		}
+		$("#choose_bot").empty();
+		var a_String = "";
+		for(var i =0;i<Choosen_Array.length;i++){
+			a_String = a_String + "<li><a name=\"Card_a\" href=\"#\">" + Choosen_Array[i] + "</a></li>";
+			}
+		return a_String;
+		}
+
+function Find_Card_Name(X,Y){
+	//根据顶部标签的下部分的显卡型号的简写找出对应的具体型号
+	function Find_Card_ARRAY(X){
+	switch(X){
+		case 0: return RM_Card;break;
+		case 1: return SY_Card;break;
+		case 2: return FS_Card;break;
+		}
+	}
+	return Find_Card_ARRAY(X)[Y];
+	}
+
+function Search(Card_Name){
+	//提交显卡型号
+	if($.inArray(Card_Name,temp)>=0 && $.inArray(Card_Name,VC_LIST) == -1){
+		//console.log(document.getElementById("text"));
+		
+		document.getElementById("inputText").value = Card_Name;
+		
+		var VC_name = '';
+		var VC_mark =  '';
+		var VC_price = '';
+		
+		var dict2 = new Object();
+		dict2['table'] = "GpuMark";
+		dict2['hardname'] = Card_Name;
+		$.ajax({
+			
+			type:"GET",
+			data:dict2,
+			url:"/GetOneData",
+			async:false,
+			dataType:"json",
+			success: function(respone){
+			
+			if((document.getElementById("row_1") != null)){	
+			$(CreatBlock(Card_Name)).insertAfter("#row_1");
+			}
+			/*
+			$(".gamelevel").click(function(){
+			
+			//console.log($(this).index(),$(this).val());
+			
+			});*/
+			
+			VC_LIST.push(Card_Name);
+			VC_name = Card_Name;
+			VC_mark = respone['mark'];
+			VC_price = PRICE(respone['price']);
+			if((document.getElementById(Card_Name + "_VC_PRICE_IN") != null)){
+			document.getElementById(Card_Name + "_VC_BRAND_IN").innerHTML = BRAND_INFO(Card_Name);
+			document.getElementById(Card_Name + "_VC_ID_IN").innerHTML = VC_name;
+			document.getElementById(Card_Name + "_VC_MARK_IN").innerHTML = "性能评分：" + VC_mark;
+			document.getElementById(Card_Name + "_VC_PRICE_IN").innerHTML = "公版价格：" + VC_price;
+			
+			}
+			
+			getGetGpuFps(Card_Name);
+			
+			},
+		});
+		
+$("#inputText").val(VC_LIST[VC_LIST.length-1]);
+		
+		}
+		else if($.inArray(Card_Name,VC_LIST) != -1){
+			$("#"+Card_Name).after("#row_1");
+			//console.log("该功能未完成");//该else if未完成 “点击已查过的型号会把该型号的panel移上来”
+			}
+			
+		else {};
+		
+		
+		//if(navigator.userAgent.match(/AppleWebKit.*Mobile.*/)){
+		//		$(".content").css("width","50%")};
+		//var x = document.getElementsByClassName("content");
+		
+		//console.log(x.children);
+		//console.log(x);
+		}
+		
+function CreatBlock(VCard_Name){
+	//创建显卡数据块 代入各种ID
+	var VC = VCard_Name;
+	var VCP = VC + "_panel";
+	var VCH = VC + "_INFO";
+	var VCB = VC + "_VC_BRAND_IN";
+	var VCID = VC + "_VC_ID_IN";
+	var VCM = VC + "_VC_MARK_IN";
+	var VCPR = VC + "_VC_PRICE_IN";
+	var VCROW = VC + "_row";
+	var VCGROW = VC + "_game_row";
+	var VCLEVEL = VC + "_LEVEL";
+	var GameULTRA = VC + "ULTRA";
+	var GameHIGH = VC + "HIGH";
+	var GameMED = VC + "MED";
+	var GameLOW = VC + "LOW" ;
+	
+	var BlockString = "<div id=\"ROWNAME\" class=\"row\"><div id=\"PANELNAME\" class=\"panel panel-default col-xs-12 col-sm-12 col-md-10 col-md-offset-1\"><div class=\"panel-body\"><div id=\"VC_ROW\" class=\"row\"><div id=\"BRAND\" class=\"col-sm-1  col-md-1\" ><H4 id=\"VC_BRAND_IN\"></H4></div><div id=\"VC_ID\" class=\"col-sm-4 col-md-4\"><h4 id=\"VC_ID_IN\"></h4></div><div id=\"VC_MARK\" class=\"col-sm-3 col-md-3\"><h4 id=\"VC_MARK_IN\"></h4></div><div id=\"VC_PRICE\" class=\"col-sm-3 col-md-3\"><h4 id=\"VC_PRICE_IN\"></h4></div></div></div><div id=\"GAMEROW\" class=\"row\"><div class=\"col-sm-12 col-md-12\"></div></div></div></div>";
+	
+	//BlockString = BlockString.replace("VCard_LEVEL",VCLEVEL);
+	//BlockString = BlockString.replace("ULTRA",GameULTRA);
+	//BlockString = BlockString.replace("HIGH",GameHIGH);
+	//BlockString = BlockString.replace("MED",GameMED);
+	//BlockString = BlockString.replace("LOW",GameLOW);
+	
+	if(navigator.userAgent.indexOf("MSIE 8.0") > -1){
+		
+		BlockString = "<div id=\"ROWNAME\" style=\" height:289px;margin:20px 50px 0px 50px\" class=\"row\"><div id=\"PANELNAME\" class=\"panel panel-default col-xs-12 col-sm-12 col-md-10 col-md-offset-1\"><div class=\"panel-body\"><div id=\"VC_ROW\" class=\"row\"style=\"height:39px;\"><div id=\"BRAND\" style=\"float:left;\" class=\"col-sm-1  col-md-1\" ><H4 id=\"VC_BRAND_IN\"></H4></div><div id=\"VC_ID\"  style=\"float:left;\"class=\"col-sm-4 col-md-4\"><h4 id=\"VC_ID_IN\"></h4></div><div id=\"VC_MARK\" style=\"float:left;\" class=\"col-sm-3 col-md-3\"><h4 id=\"VC_MARK_IN\"  style=\"float:left;\"></h4></div><div id=\"VC_PRICE\" class=\"col-sm-3 col-md-3\"><h4 id=\"VC_PRICE_IN\"></h4></div></div></div><div id=\"GAMEROW\" class=\"row\" style=\"height:240px;\"><div class=\"col-sm-12 col-md-12\"></div></div></div></div>"}
+
+	BlockString = BlockString.replace("ROWNAME",VC);
+	BlockString = BlockString.replace("PANELNAME",VCP);
+	BlockString = BlockString.replace("ROWNAME_HEADER",VCH);
+	BlockString = BlockString.replace("VC_BRAND_IN",VCB);
+	BlockString = BlockString.replace("VC_ID_IN",VCID);
+	BlockString = BlockString.replace("VC_MARK_IN",VCM);
+	BlockString = BlockString.replace("VC_PRICE_IN",VCPR);
+	BlockString = BlockString.replace("VC_ROW",VCROW);
+	BlockString = BlockString.replace("GAMEROW",VCGROW);
+	
+	return BlockString;
+	}
+
+	
+function BRAND_INFO(VC_ID){
+	//判断品牌
+	if(VC_ID.indexOf("Radeon") != -1||VC_ID.indexOf("RADEON") != -1||VC_ID.indexOf("SUMO") != -1){return  "AMD"}
+	else if(VC_ID.indexOf("Intel") != -1||VC_ID.indexOf("SiS") != -1){return  "Intel"}
+	else if(VC_ID.indexOf("GeForce") != -1||VC_ID.indexOf("Quadro") != -1||VC_ID.indexOf("NVS") != -1){return "nVidia"}
+	else if(VC_ID.indexOf("Fire") != -1){return  "ATI"}
+	else {};
+	}
+
+function PRICE(price){
+	//修正价格
+	if( price == 'NA'){return '暂无'}
+	else return parseInt(price.substring(1,price.indexOf("."))) * 6 + "元";
+	}
+
+		
+$(CreatChoosen(1)).appendTo("#choose_bot");	
+$("#choose_bot a").click(function(){
+	
+	Search(Find_Card_Name(1,$(this).parent().index()));
+	});	
+	
+$("#choose_top").children().not(".disabled").click(function(){
+		$(this).addClass("active");
+		$(this).siblings().removeClass("active");
+		VC_LEVEL = $(this).index();
+		$(CreatChoosen(VC_LEVEL)).appendTo("#choose_bot");
+		$("#choose_bot a").click(function(){
+			Search(Find_Card_Name(VC_LEVEL,$(this).parent().index()));
+			});	
+		});
+
+//输入框事件触发	
+$( "#inputText" )
+.val("搜索")
+//.focusout(function (){
+//	$(this).val("Radeon HD 7850");
+//	})
+.focus(function(){
+	$(this).val("");
+	})	
+.keydown(function( event ) {
+  if ( event.which == 13 ) {
+   event.preventDefault();
+   Search($("#inputText").val());
+  }		
+  });		
+
+//按钮事件触发
+$("#GO").on("click",function(){
+	
+	Search($("#inputText").val());
+	
+	
+	});
+	
+
+
+</script>
+<script>
+		//    navigator.userAgent就是u
+       //     trident: u.indexOf('Trident') > -1, //IE内核
+       //     presto: u.indexOf('Presto') > -1, //opera内核
+       //     webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+       //     gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+       //     mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+         //   ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+           // android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+            //iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+            //iPad: u.indexOf('iPad') > -1, //是否iPad
+            //webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+			
+
+
+
+</script>
+
+</body>
+</html>
