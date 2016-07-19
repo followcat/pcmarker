@@ -19,12 +19,10 @@
 </head>
 <body>
 <div class="demo-page w1000 font_wryh content" id="page-main">
-
+{{ content }}
 </div>
 </body>
 <script>
-    Vue.config.delimiters = ['<%','%>'];
-    Vue.config.unsafeDelimiters = ['<%%','%%>'];
 
     var resource = require('../../modules/common/vue/resource/vue-resource');
 
@@ -37,7 +35,7 @@
         el: '#page-main',
         data : function(){
             return {
-
+                content : 'hello PCM'
             }
         },
         computed : {
