@@ -1,0 +1,29 @@
+.input_box {
+  position: relative; }
+  .input_box .verify_btn {
+    position: absolute;
+    top: 8px;
+    right: 8px; }
+
+.ui-dialog .ui-dialog-bd {
+  font-size: 16px; }
+
+.category_side {
+  font-size: 14px;
+  width: 100px;
+  border-right: 1px solid #ddd; }
+  .category_side .category_inside {
+    height: 44px;
+    border-bottom: 1px solid #ddd;
+    line-height: 44px;
+    text-align: center;
+    background: #fff; }
+
+.category_other_side {
+  font-size: 14px;
+  float: left;
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
+  background: #fff;
+  width: 50%; }
